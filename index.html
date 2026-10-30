@@ -93,63 +93,98 @@
         </div>
     </section>
 
-    <!-- SECCIÓN: SERVICIOS TÉCNICOS (TARJETAS COLORIDAS) -->
+    <!-- SECCIÓN: SERVICIOS TÉCNICOS (TARJETAS COLORIDAS E INTERACTIVAS) -->
     <section id="servicios" class="py-20 bg-slate-950 px-4 border-t border-slate-800/80">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-14">
                 <span class="text-cyan-400 font-bold uppercase tracking-widest text-xs">Especialidades</span>
                 <h2 class="text-3xl font-black text-white mt-1">Nuestros Servicios Principales</h2>
-                <p class="text-slate-400 text-sm mt-2">Soluciones profesionales diseñadas a la medida de tu hogar.</p>
+                <p class="text-slate-400 text-sm mt-2">Haz clic en cotizar servicio para seleccionarlo automáticamente en el formulario.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Refrigeradoras -->
-                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-cyan-500 transition shadow-lg group">
-                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-5 group-hover:bg-cyan-500 group-hover:text-white transition">
-                        <i class="fa-solid fa-snowflake"></i>
+                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-cyan-500 transition shadow-lg group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-5 group-hover:bg-cyan-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-snowflake"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-white mb-2">Refrigeradoras y No Frost</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Recarga de gas, problemas de tarjeta electrónica, cambio de motor y solución a fugas de frío.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-2">Refrigeradoras y No Frost</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Recarga de gas, problemas de tarjeta electrónica, cambio de motor y solución a fugas de frío.</p>
+                    <button onclick="seleccionarServicio('Refrigeradora')" class="w-full bg-cyan-500/10 hover:bg-cyan-500 text-cyan-300 hover:text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition border border-cyan-500/30">
+                        Cotizar Servicio
+                    </button>
                 </div>
+
                 <!-- Lavadoras -->
-                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-blue-500 transition shadow-lg group">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl mb-5 group-hover:bg-blue-500 group-hover:text-white transition">
-                        <i class="fa-solid fa-shirt"></i>
+                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-blue-500 transition shadow-lg group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl mb-5 group-hover:bg-blue-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-shirt"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-white mb-2">Lavadoras y Secadoras</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Mantenimiento de tambor, cambio de bomba de agua, solución a fallas de centrifugado y tarjetas.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-2">Lavadoras y Secadoras</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Mantenimiento de tambor, cambio de bomba de agua, solución a fallas de centrifugado y tarjetas.</p>
+                    <button onclick="seleccionarServicio('Lavadora')" class="w-full bg-blue-500/10 hover:bg-blue-500 text-blue-300 hover:text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition border border-blue-500/30">
+                        Cotizar Servicio
+                    </button>
                 </div>
+
                 <!-- Cocinas -->
-                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-orange-500 transition shadow-lg group">
-                    <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-400 flex items-center justify-center text-xl mb-5 group-hover:bg-orange-500 group-hover:text-white transition">
-                        <i class="fa-solid fa-fire-burner"></i>
+                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-orange-500 transition shadow-lg group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-400 flex items-center justify-center text-xl mb-5 group-hover:bg-orange-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-fire-burner"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-white mb-2">Cocinas a Gas y Eléctricas</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Desatoro de quemadores, conversión de gas, revisión de fugas y ajuste de sistemas de seguridad.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-2">Cocinas a Gas y Eléctricas</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Desatoro de quemadores, conversión de gas, revisión de fugas y ajuste de sistemas de seguridad.</p>
+                    <button onclick="seleccionarServicio('Cocina a Gas')" class="w-full bg-orange-500/10 hover:bg-orange-500 text-orange-300 hover:text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition border border-orange-500/30">
+                        Cotizar Servicio
+                    </button>
                 </div>
+
                 <!-- Microondas -->
-                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-purple-500 transition shadow-lg group">
-                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl mb-5 group-hover:bg-purple-500 group-hover:text-white transition">
-                        <i class="fa-solid fa-wave-square"></i>
+                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-purple-500 transition shadow-lg group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl mb-5 group-hover:bg-purple-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-wave-square"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-white mb-2">Hornos Microondas</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Solución cuando no calienta, chispazos internos, cambio de magnetrón, fusibles y teclas digitales.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-2">Hornos Microondas</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Solución cuando no calienta, chispazos internos, cambio de magnetrón, fusibles y teclas digitales.</p>
+                    <button onclick="seleccionarServicio('Horno Microondas')" class="w-full bg-purple-500/10 hover:bg-purple-500 text-purple-300 hover:text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition border border-purple-500/30">
+                        Cotizar Servicio
+                    </button>
                 </div>
+
                 <!-- Licuadoras -->
-                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-pink-500 transition shadow-lg group">
-                    <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-xl mb-5 group-hover:bg-pink-500 group-hover:text-white transition">
-                        <i class="fa-solid fa-blender"></i>
+                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-pink-500 transition shadow-lg group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-xl mb-5 group-hover:bg-pink-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-blender"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-white mb-2">Licuadoras y Pequeños Enseres</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Reparación de motores, cambio de pines/acoples, mantenimiento de potencias y piezas desgastadas.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-2">Licuadoras y Pequeños Enseres</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Reparación de motores, cambio de pines/acoples, mantenimiento de potencias y piezas desgastadas.</p>
+                    <button onclick="seleccionarServicio('Licuadora / Enseres')" class="w-full bg-pink-500/10 hover:bg-pink-500 text-pink-300 hover:text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition border border-pink-500/30">
+                        Cotizar Servicio
+                    </button>
                 </div>
+
                 <!-- Mantenimiento Preventivo -->
-                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-emerald-500 transition shadow-lg group">
-                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-5 group-hover:bg-emerald-500 group-hover:text-white transition">
-                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-emerald-500 transition shadow-lg group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-5 group-hover:bg-emerald-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-white mb-2">Mantenimiento Preventivo</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">Limpieza profunda, calibración de componentes y revisión técnica para evitar fallas costosas en el futuro.</p>
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-2">Mantenimiento Preventivo</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Limpieza profunda, calibración de componentes y revisión técnica para evitar fallas costosas en el futuro.</p>
+                    <button onclick="seleccionarServicio('Mantenimiento Preventivo')" class="w-full bg-emerald-500/10 hover:bg-emerald-500 text-emerald-300 hover:text-white font-bold py-2.5 px-4 rounded-xl text-xs uppercase tracking-wider transition border border-emerald-500/30">
+                        Cotizar Servicio
+                    </button>
                 </div>
             </div>
         </div>
@@ -282,4 +317,4 @@
     <!-- Vinculación del JavaScript -->
     <script src="script.js"></script>
 </body>
-</html>
+</html>-xl transition border-t-4 border-blue-

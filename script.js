@@ -72,7 +72,6 @@ function registrarSolicitud(e) {
     alert('¡Solicitud registrada con éxito! Te redirigiremos a WhatsApp para confirmar la llegada del técnico.');
     window.open(urlWhatsApp, '_blank');
 }
-document.addEventListener("DOMContentLoaded", function() {
     const btnWhatsapp = document.getElementById("btn-whatsapp");
     
     if (btnWhatsapp) {

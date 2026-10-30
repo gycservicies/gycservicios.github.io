@@ -3,95 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración | C&G Servicio Técnico</title>
-    <!-- Tailwind CSS -->
+    <title>Acceso Admin | C&G Servicio Técnico</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body style="background-color: #0f172a; color: #f8fafc; font-family: sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
+<body class="bg-slate-900 text-slate-100 font-sans flex items-center justify-center min-h-screen m-0">
 
-    <!-- CONTENEDOR DE LOGIN -->
-    <div id="login-container" style="max-width: 400px; width: 100%; background-color: #020617; border: 1px solid #1e293b; border-radius: 24px; padding: 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
-        <div style="text-align: center; margin-bottom: 32px;">
-            <h2 style="font-size: 24px; font-weight: 900; color: white; margin: 0 0 8px 0;">Acceso al Panel</h2>
-            <p style="color: #94a3b8; font-size: 14px; margin: 0;">C&G Servicio Técnico</p>
+    <div class="max-w-md w-full bg-slate-950 border border-slate-800 rounded-3xl p-8 shadow-2xl">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-black text-white mb-2">Acceso al Panel</h2>
+            <p class="text-slate-400 text-sm">C&G Servicio Técnico</p>
         </div>
 
         <form onsubmit="validarLogin(event)">
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px;">Usuario</label>
-                <input type="text" id="admin-user" required style="width: 100%; box-sizing: border-box; padding: 12px 16px; background-color: #0f172a; border: 1px solid #1e293b; border-radius: 12px; color: white; font-size: 14px; outline: none;">
+            <div class="mb-4">
+                <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Usuario</label>
+                <input type="text" id="admin-user" required class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-blue-600">
             </div>
-            <div style="margin-bottom: 24px;">
-                <label style="display: block; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px;">Contraseña</label>
-                <input type="password" id="admin-pass" required style="width: 100%; box-sizing: border-box; padding: 12px 16px; background-color: #0f172a; border: 1px solid #1e293b; border-radius: 12px; color: white; font-size: 14px; outline: none;">
+            <div class="mb-6">
+                <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Contraseña</label>
+                <input type="password" id="admin-pass" required class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-white text-sm focus:outline-none focus:border-blue-600">
             </div>
-            <button type="submit" style="width: 100%; background-color: #2563eb; color: white; font-weight: bold; padding: 14px; border-radius: 12px; font-size: 14px; border: none; cursor: pointer;">
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl text-sm transition">
                 Ingresar al Panel
             </button>
         </form>
     </div>
 
-    <!-- PANEL DE ADMINISTRACIÓN (OCULTO) -->
-    <div id="panel-container" style="display: none; max-width: 800px; width: 100%; background-color: #020617; border: 1px solid #1e293b; border-radius: 24px; padding: 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); margin: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid #1e293b; padding-bottom: 16px;">
-            <h2 style="font-size: 18px; font-weight: bold; color: white; margin: 0;">📋 Solicitudes Recibidas</h2>
-            <button onclick="cerrarSesion()" style="background-color: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 8px 16px; border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer;">
-                Cerrar Sesión
-            </button>
-        </div>
-
-        <div id="lista-pedidos" style="max-height: 60vh; overflow-y: auto;">
-            <!-- Dinámico -->
-        </div>
-    </div>
-
     <script>
+        // Al cargar el login, borramos cualquier sesión previa para forzar el ingreso limpio
+        localStorage.removeItem('auth_cg');
+
         function validarLogin(e) {
             e.preventDefault();
             const usuario = document.getElementById('admin-user').value.trim();
             const password = document.getElementById('admin-pass').value.trim();
 
             if (usuario === 'admin_cg' && password === 'tecnico2026') {
-                document.getElementById('login-container').style.display = 'none';
-                document.getElementById('panel-container').style.display = 'block';
-                cargarPedidos();
+                localStorage.setItem('auth_cg', 'true');
+                window.location.href = 'admin.html';
             } else {
                 alert('Usuario o contraseña incorrectos.');
             }
-        }
-
-        function cargarPedidos() {
-            const contenedor = document.getElementById('lista-pedidos');
-            const pedidos = JSON.parse(localStorage.getItem('pedidos_cg')) || [];
-
-            if (pedidos.length === 0) {
-                contenedor.innerHTML = '<p style="color: #64748b; text-align: center; padding: 32px; font-size: 14px;">No hay solicitudes registradas todavía.</p>';
-                return;
-            }
-
-            contenedor.innerHTML = pedidos.map(p => `
-                <div style="background-color: #0f172a; border: 1px solid #1e293b; padding: 20px; border-radius: 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <span style="font-size: 12px; color: #60a5fa; font-weight: bold;">${p.fecha}</span>
-                        <h3 style="color: white; font-size: 16px; margin: 4px 0;">${p.equipo} - ${p.nombre}</h3>
-                        <p style="color: #94a3b8; font-size: 14px; margin: 4px 0;">📞 ${p.telefono} | 📍 ${p.direccion}</p>
-                        <p style="color: #cbd5e1; font-size: 14px; margin: 8px 0 0 0; background-color: #020617; padding: 10px; border-radius: 10px; border: 1px solid rgba(30, 41, 59, 0.6);">📝 <strong>Falla:</strong> ${p.referencia}</p>
-                    </div>
-                    <a href="https://wa.me/51${p.telefono}?text=Hola%20${p.nombre},%20te%20contacto%20de%20C%26G%20Servicio%20T%C3%A9cnico%20sobre%20tu%20solicitud%20de%20${p.equipo}..." 
-                       target="_blank" 
-                       style="background-color: #16a34a; color: white; font-weight: bold; padding: 10px 16px; border-radius: 12px; font-size: 12px; text-decoration: none; white-space: nowrap;">
-                        WhatsApp
-                    </a>
-                </div>
-            `).join('');
-        }
-
-        function cerrarSesion() {
-            document.getElementById('panel-container').style.display = 'none';
-            document.getElementById('login-container').style.display = 'block';
-            document.getElementById('admin-user').value = '';
-            document.getElementById('admin-pass').value = '';
         }
     </script>
 </body>

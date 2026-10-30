@@ -1,3 +1,7 @@
+
+
+
+
 // ==========================================
 // LÓGICA DE INTERACTIVIDAD Y FORMULARIO DE CLIENTES
 // ==========================================
@@ -68,3 +72,27 @@ function registrarSolicitud(e) {
     alert('¡Solicitud registrada con éxito! Te redirigiremos a WhatsApp para confirmar la llegada del técnico.');
     window.open(urlWhatsApp, '_blank');
 }
+function registrarVisitaWhatsApp() {
+    // 1. Crear el objeto de la orden con la llave exacta que lee tu admin
+    const nuevaOrden = {
+        id: Date.now(),
+        cliente: "Cliente Web (WhatsApp)",
+        servicio: "Técnico a domicilio (Botón Flotante)",
+        fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
+        estado: "Pendiente"
+    };
+
+    // 2. Obtener las órdenes actuales de localStorage o crear un arreglo vacío
+    let ordenes = JSON.parse(localStorage.getItem('admin_orders')) || [];
+
+    // 3. Agregar la nueva orden
+    ordenes.push(nuevaOrden);
+
+    // 4. Guardar en localStorage con la llave que lee el panel de administración
+    localStorage.setItem('admin_orders', JSON.stringify(ordenes));
+
+    // 5. Abrir el chat de WhatsApp en una nueva pestaña
+    const numero = "51948090217"; // El número que ya tienes configurado
+    const mensaje = encodeURIComponent("Hola, quisiera solicitar un técnico a domicilio");
+    window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
+} 

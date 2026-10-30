@@ -77,20 +77,23 @@ function registrarSolicitud(e) {
     if (btnWhatsapp) {
         btnWhatsapp.addEventListener("click", function() {
             // 1. Crear el objeto de la orden
-            const nuevaOrden = {
-                id: Date.now(),
-                cliente: "Cliente Web (WhatsApp)",
-                servicio: "Técnico a domicilio (Botón Flotante)",
-                fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
-                estado: "Pendiente"
-            };
+           const nuevaOrden = {
+    id: Date.now(),
+    nombre: "Cliente (Botón Flotante)",
+    telefono: "Chat Directo",
+    equipo: "Visita a Domicilio",
+    direccion: "No especificada (WhatsApp)",
+    referencia: "Inició chat desde el botón flotante",
+    fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
+    estado: "Pendiente"
+};            };
 
             // 2. Obtener las órdenes actuales de localStorage o crear un arreglo vacío
-            let ordenes = JSON.parse(localStorage.getItem('admin_orders')) || [];
+            let ordenes = JSON.parse(localStorage.getItem('pedidos_cg')) || [];
 
             // 3. Agregar la nueva orden y guardar
             ordenes.push(nuevaOrden);
-            localStorage.setItem('admin_orders', JSON.stringify(ordenes));
+            localStorage.setItem('pedidos_cg', JSON.stringify(ordenes));
         });
     }
 });

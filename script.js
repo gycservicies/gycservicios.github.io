@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// 3. Función para autoseleccionar el equipo en el formulario al hacer clic en las tarjetas
+// 3. Función para autoseleccionar el equipo en el formulario y bajar con animación
 function seleccionarServicio(nombreEquipo) {
     const selectEquipo = document.getElementById('cliente-equipo');
     
@@ -43,7 +43,6 @@ function seleccionarServicio(nombreEquipo) {
         selectEquipo.value = nombreEquipo;
     }
 
-    // Desplazarse suavemente hasta la sección del formulario de solicitud
     const seccionSolicitar = document.getElementById('solicitar');
     if (seccionSolicitar) {
         seccionSolicitar.scrollIntoView({

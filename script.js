@@ -35,7 +35,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// 3. Función para registrar la solicitud del cliente y abrir WhatsApp
+// 3. Función para autoseleccionar el equipo en el formulario al hacer clic en las tarjetas
+function seleccionarServicio(nombreEquipo) {
+    const selectEquipo = document.getElementById('cliente-equipo');
+    
+    if (selectEquipo) {
+        selectEquipo.value = nombreEquipo;
+    }
+
+    // Desplazarse suavemente hasta la sección del formulario de solicitud
+    const seccionSolicitar = document.getElementById('solicitar');
+    if (seccionSolicitar) {
+        seccionSolicitar.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+// 4. Función para registrar la solicitud del cliente y abrir WhatsApp
 function registrarSolicitud(e) {
     e.preventDefault();
 

@@ -1,7 +1,3 @@
-
-
-
-
 // ==========================================
 // LÓGICA DE INTERACTIVIDAD Y FORMULARIO DE CLIENTES
 // ==========================================
@@ -39,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// 3. Función para registrar la solicitud del cliente y abrir WhatsApp
+// 3. Función para registrar la solicitud del formulario y abrir WhatsApp
 function registrarSolicitud(e) {
     e.preventDefault();
 
@@ -72,37 +68,29 @@ function registrarSolicitud(e) {
     alert('¡Solicitud registrada con éxito! Te redirigiremos a WhatsApp para confirmar la llegada del técnico.');
     window.open(urlWhatsApp, '_blank');
 }
-   const btnWhatsapp = document.getElementById("btn-whatsapp");
+
+// 4. Lógica para el Botón Flotante de WhatsApp (Registra en la misma lista del panel)
+const btnWhatsapp = document.getElementById("btn-whatsapp");
 
 if (btnWhatsapp) {
     btnWhatsapp.addEventListener("click", function(e) {
-        // 1. Evitamos que abra el enlace de inmediato para que dé tiempo de guardar
         e.preventDefault();
 
-        // 2. Crear el objeto de la orden con la estructura exacta de tu panel
-        const nuevaOrden = {
+        const nuevaOrdenFlotante = {
             id: Date.now(),
             nombre: "Cliente (Botón Flotante)",
             telefono: "Chat Directo",
             equipo: "Visita a Domicilio",
             direccion: "No especificada (WhatsApp)",
             referencia: "Inició chat desde el botón flotante",
-            fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
+            fecha: new Date().toLocaleString('es-PE'),
             estado: "Pendiente"
         };
 
-        // 3. Obtener, guardar y asegurar en 'pedidos_cg'
-        let ordenes = JSON.parse(localStorage.getItem('pedidos_cg')) || [];
-        ordenes.push(nuevaOrden);
-        localStorage.setItem('pedidos_cg', JSON.stringify(ordenes));
+        let listaPedidos = JSON.parse(localStorage.getItem('pedidos_cg')) || [];
+        listaPedidos.unshift(nuevaOrdenFlotante);
+        localStorage.setItem('pedidos_cg', JSON.stringify(listaPedidos));
 
-        let clics = JSON.parse(localStorage.getItem('whatsapp_clicks')) || [];
-        clics.push({
-            id: Date.now(),
-            fecha: new Date().toLocaleDateString(),
-            origen: "Botón Flotante"
-        });
-        localStorage.setItem('whatsapp_clicks', JSON.stringify(clics));        // 4. Redirigir a WhatsApp después de guardar los datos con éxito
         const urlWhatsApp = btnWhatsapp.getAttribute("href");
         window.open(urlWhatsApp, "_blank");
     });

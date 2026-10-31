@@ -72,28 +72,32 @@ function registrarSolicitud(e) {
     alert('¡Solicitud registrada con éxito! Te redirigiremos a WhatsApp para confirmar la llegada del técnico.');
     window.open(urlWhatsApp, '_blank');
 }
-    const btnWhatsapp = document.getElementById("btn-whatsapp");
-    
-    if (btnWhatsapp) {
-        btnWhatsapp.addEventListener("click", function() {
-            // 1. Crear el objeto de la orden
-           const nuevaOrden = {
-    id: Date.now(),
-    nombre: "Cliente (Botón Flotante)",
-    telefono: "Chat Directo",
-    equipo: "Visita a Domicilio",
-    direccion: "No especificada (WhatsApp)",
-    referencia: "Inició chat desde el botón flotante",
-    fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
-    estado: "Pendiente"
-};            };
+   const btnWhatsapp = document.getElementById("btn-whatsapp");
 
-            // 2. Obtener las órdenes actuales de localStorage o crear un arreglo vacío
-            let ordenes = JSON.parse(localStorage.getItem('pedidos_cg')) || [];
+if (btnWhatsapp) {
+    btnWhatsapp.addEventListener("click", function(e) {
+        // 1. Evitamos que abra el enlace de inmediato para que dé tiempo de guardar
+        e.preventDefault();
 
-            // 3. Agregar la nueva orden y guardar
-            ordenes.push(nuevaOrden);
-            localStorage.setItem('pedidos_cg', JSON.stringify(ordenes));
-        });
-    }
-});
+        // 2. Crear el objeto de la orden con la estructura exacta de tu panel
+        const nuevaOrden = {
+            id: Date.now(),
+            nombre: "Cliente (Botón Flotante)",
+            telefono: "Chat Directo",
+            equipo: "Visita a Domicilio",
+            direccion: "No especificada (WhatsApp)",
+            referencia: "Inició chat desde el botón flotante",
+            fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString(),
+            estado: "Pendiente"
+        };
+
+        // 3. Obtener, guardar y asegurar en 'pedidos_cg'
+        let ordenes = JSON.parse(localStorage.getItem('pedidos_cg')) || [];
+        ordenes.push(nuevaOrden);
+        localStorage.setItem('pedidos_cg', JSON.stringify(ordenes));
+
+        // 4. Redirigir a WhatsApp después de guardar los datos con éxito
+        const urlWhatsApp = btnWhatsapp.getAttribute("href");
+        window.open(urlWhatsApp, "_blank");
+    });
+}

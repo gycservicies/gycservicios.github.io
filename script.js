@@ -98,12 +98,11 @@ if (btnWhatsapp) {
 
         let clics = JSON.parse(localStorage.getItem('whatsapp_clicks')) || [];
         clics.push({
-            servicio: "Visita a Domicilio (Botón Flotante)",
-            fecha: new Date().toLocaleDateString()
-       ;
-});
-localStorage.setItem('whatsapp_clicks', JSON.stringify(clics));
-        // 4. Redirigir a WhatsApp después de guardar los datos con éxito
+            id: Date.now(),
+            fecha: new Date().toLocaleDateString(),
+            origen: "Botón Flotante"
+        });
+        localStorage.setItem('whatsapp_clicks', JSON.stringify(clics));        // 4. Redirigir a WhatsApp después de guardar los datos con éxito
         const urlWhatsApp = btnWhatsapp.getAttribute("href");
         window.open(urlWhatsApp, "_blank");
     });

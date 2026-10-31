@@ -70,28 +70,31 @@ function registrarSolicitud(e) {
 }
 
 // 4. Lógica para el Botón Flotante de WhatsApp (Registra en la misma lista del panel)
-const btnWhatsapp = document.getElementById("btn-whatsapp");
+// Lógica para asegurar el funcionamiento del Botón Flotante
+document.addEventListener('DOMContentLoaded', () => {
+    const btnWhatsapp = document.getElementById("btn-whatsapp");
 
-if (btnWhatsapp) {
-    btnWhatsapp.addEventListener("click", function(e) {
-        e.preventDefault();
+    if (btnWhatsapp) {
+        btnWhatsapp.addEventListener("click", function(e) {
+            e.preventDefault();
 
-        const nuevaOrdenFlotante = {
-            id: Date.now(),
-            nombre: "Cliente (Botón Flotante)",
-            telefono: "Chat Directo",
-            equipo: "Visita a Domicilio",
-            direccion: "No especificada (WhatsApp)",
-            referencia: "Inició chat desde el botón flotante",
-            fecha: new Date().toLocaleString('es-PE'),
-            estado: "Pendiente"
-        };
+            const nuevaOrdenFlotante = {
+                id: Date.now(),
+                nombre: "Cliente (Botón Flotante)",
+                telefono: "Chat Directo",
+                equipo: "Visita a Domicilio",
+                direccion: "No especificada (WhatsApp)",
+                referencia: "Inició chat desde el botón flotante",
+                fecha: new Date().toLocaleString('es-PE'),
+                estado: "Pendiente"
+            };
 
-        let listaPedidos = JSON.parse(localStorage.getItem('pedidos_cg')) || [];
-        listaPedidos.unshift(nuevaOrdenFlotante);
-        localStorage.setItem('pedidos_cg', JSON.stringify(listaPedidos));
+            let listaPedidos = JSON.parse(localStorage.getItem('pedidos_cg')) || [];
+            listaPedidos.unshift(nuevaOrdenFlotante);
+            localStorage.setItem('pedidos_cg', JSON.stringify(listaPedidos));
 
-        const urlWhatsApp = btnWhatsapp.getAttribute("href");
-        window.open(urlWhatsApp, "_blank");
-    });
-}
+            const urlWhatsApp = btnWhatsapp.getAttribute("href");
+            window.open(urlWhatsApp, "_blank");
+        });
+    }
+});

@@ -97,9 +97,10 @@ if (btnWhatsapp) {
         localStorage.setItem('pedidos_cg', JSON.stringify(ordenes));
 
         let clics = JSON.parse(localStorage.getItem('whatsapp_clicks')) || [];
-clics.push({
-    servicio: "Visita a Domicilio (Botón Flotante)",
-    fecha: new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()
+        clics.push({
+            servicio: "Visita a Domicilio (Botón Flotante)",
+            fecha: new Date().toLocaleDateString()
+       ;
 });
 localStorage.setItem('whatsapp_clicks', JSON.stringify(clics));
         // 4. Redirigir a WhatsApp después de guardar los datos con éxito

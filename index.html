@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRIS STORE | Dota 2 Pro Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css?v=6.0">
+</head>
+<body class="dota-body min-h-screen flex flex-col">
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- HEADER / HUD SUPERIOR -->
+    <header class="dota-header sticky top-0 z-40">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-18 flex items-center justify-between gap-4">
+            
+            <div class="flex items-center gap-3.5">
+                <div class="dota-logo-box">
+                    <span class="font-dota font-black text-xl text-[#ffc72c] tracking-tighter">CS</span>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-dota text-lg font-black tracking-widest text-white uppercase" id="store-title">CRIS STORE</h1>
+                        <span class="px-1.5 py-0.5 text-[9px] font-black uppercase bg-[#ffc72c]/10 text-[#ffc72c] border border-[#ffc72c]/30">HUD v2.6</span>
+                    </div>
+                    <span class="text-[10px] text-emerald-400 flex items-center gap-1.5 font-bold uppercase tracking-wider">
+                        <span class="w-1.5 h-1.5 bg-emerald-400 animate-ping"></span> Trade Engine Online
+                    </span>
+                </div>
+            </div>
+
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-bold uppercase tracking-wider text-slate-400">
+                <a href="#market-section" class="hover:text-[#ffc72c] transition flex items-center gap-1.5">
+                    <i data-lucide="crosshair" class="w-3.5 h-3.5 text-[#ffc72c]"></i> Mercado Live
+                </a>
+                <button onclick="openModal('recharge-modal')" class="hover:text-emerald-400 transition flex items-center gap-1.5 uppercase">
+                    <i data-lucide="database" class="w-3.5 h-3.5 text-emerald-500"></i> Wallet / Saldo
+                </button>
+                <a id="nav-whatsapp-btn" href="#" target="_blank" class="hover:text-white transition flex items-center gap-1.5">
+                    <i data-lucide="terminal" class="w-3.5 h-3.5 text-cyan-400"></i> Soporte Bot
+                </a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <div id="auth-guest">
+                    <button onclick="openModal('auth-modal')" class="btn-dota-gold px-5 py-2.5 text-xs font-black uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="shield-alert" class="w-4 h-4"></i> Conectar Steam
+                    </button>
+                </div>
+                <div id="auth-user" class="hidden flex items-center gap-3 dota-user-pill px-3.5 py-1.5">
+                    <div class="text-right">
+                        <div class="text-[9px] text-slate-400 uppercase font-bold">Steam Nick</div>
+                        <div class="text-xs font-bold text-white truncate max-w-[110px]" id="current-username">Player</div>
+                    </div>
+                    <div class="h-6 w-px bg-[#263142]"></div>
+                    <div>
+                        <div class="text-[9px] text-slate-400 uppercase font-bold">Balance</div>
+                        <div class="text-xs font-black text-emerald-400 font-mono-tech" id="current-balance">S/ 0.00</div>
+                    </div>
+                    <button onclick="openModal('recharge-modal')" class="btn-dota-green px-2.5 py-1.5 text-[11px] font-bold uppercase" title="Recargar Saldo">+ S/</button>
+                    <button onclick="logout()" class="p-1.5 text-slate-400 hover:text-red-400 transition" title="Desconectar"><i data-lucide="power" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- TICKER SUPERIOR TIPO TERMINAL -->
+    <section class="dota-ticker-bar py-2 border-b border-[#18202e]">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 flex items-center gap-3">
+            <div class="flex items-center gap-1.5 px-2.5 py-0.5 bg-red-950/80 border border-red-600/50 text-red-400 text-[10px] font-black uppercase tracking-wider flex-shrink-0">
+                <span class="w-1.5 h-1.5 bg-red-500 animate-pulse"></span> DROPS LIVE
+            </div>
+            <div id="live-ticker-grid" class="flex items-center gap-3 overflow-x-auto no-scrollbar w-full">
+                <span class="text-xs text-slate-500 font-mono-tech">Conectando con base de datos de ítems...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- HERO INDUSTRIAL -->
+    <section class="dota-hero relative py-12 px-4 sm:px-6 overflow-hidden">
+        <div class="max-w-[1440px] mx-auto relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div class="max-w-2xl text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 mb-3 bg-[#18202e] border border-[#2b3a52] text-[#ffc72c] text-[11px] font-black uppercase tracking-widest">
+                    <i data-lucide="zap" class="w-3.5 h-3.5"></i> SISTEMA DE INTERCAMBIO AUTOMATIZADO 24/7
+                </div>
+                <h2 class="font-dota text-3xl sm:text-5xl font-black text-white uppercase leading-none tracking-wide mb-3">
+                    MERCADO DE SKINS <span class="text-[#ffc72c] drop-shadow-[0_0_15px_rgba(255,199,44,0.3)]">SIN INTERMEDIARIOS</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-xl font-medium">
+                    Adquiere Arcanas, Inmortales y Sets usando tu saldo interno. Stock sincronizado al milisegundo directamente con tu cuenta de Steam via Trade URL.
+                </p>
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                    <button onclick="scrollToMarket()" class="btn-dota-gold px-6 py-3 text-xs font-black uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4"></i> Ver Inventario Completo
+                    </button>
+                    <button onclick="openModal('recharge-modal')" class="btn-dota-dark px-6 py-3 text-xs font-black uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="qr-code" class="w-4 h-4 text-emerald-400"></i> Recargar con Yape / BCP
+                    </button>
+                </div>
+            </div>
+
+            <!-- ACCESOS RÁPIDOS TIPO HUD -->
+            <div class="grid grid-cols-2 gap-3 w-full max-w-md">
+                <div onclick="filterByQuickRarity('Arcana')" class="dota-quick-card border-l-4 border-l-red-600 p-4 cursor-pointer">
+                    <div class="text-[9px] font-black uppercase text-red-500 tracking-wider">MÁXIMO TIER</div>
+                    <div class="font-dota text-xl font-black text-white uppercase">ARCANAS</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">Filtrar rareza →</div>
+                </div>
+                <div onclick="filterByQuickRarity('Immortal')" class="dota-quick-card border-l-4 border-l-amber-500 p-4 cursor-pointer">
+                    <div class="text-[9px] font-black uppercase text-amber-400 tracking-wider">EFECTOS CUSTOM</div>
+                    <div class="font-dota text-xl font-black text-white uppercase">INMORTALES</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">Filtrar rareza →</div>
+                </div>
+                <div onclick="filterByQuickRarity('Mythical')" class="dota-quick-card border-l-4 border-l-purple-500 p-4 cursor-pointer">
+                    <div class="text-[9px] font-black uppercase text-purple-400 tracking-wider">COLECCIÓN</div>
+                    <div class="font-dota text-xl font-black text-white uppercase">MÍTICOS</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">Filtrar rareza →</div>
+                </div>
+                <div onclick="filterByQuickRarity('Rare')" class="dota-quick-card border-l-4 border-l-blue-500 p-4 cursor-pointer">
+                    <div class="text-[9px] font-black uppercase text-blue-400 tracking-wider">ECONÓMICOS</div>
+                    <div class="font-dota text-xl font-black text-white uppercase">RAROS / SETS</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">Filtrar rareza →</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BARRA DE FILTROS TÁCTICA -->
+    <section id="market-section" class="dota-filter-bar sticky top-18 z-30 py-3.5 px-4 sm:px-6">
+        <div class="max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-3">
+            <div class="relative w-full lg:w-80">
+                <i data-lucide="search" class="absolute left-3.5 top-3 w-4 h-4 text-slate-500"></i>
+                <input type="text" id="search-input" oninput="filterItems()" placeholder="Buscar héroe o ítem..." class="dota-input w-full pl-10 pr-4 py-2.5 text-xs font-medium">
+            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto w-full lg:w-auto pb-1 lg:pb-0 no-scrollbar">
+                <button onclick="setCategory('ALL', this)" class="rarity-filter-btn active px-4 py-2 text-xs font-black uppercase tracking-wider">Todos</button>
+                <button onclick="setCategory('Arcana', this)" class="rarity-filter-btn px-4 py-2 text-xs font-black uppercase tracking-wider text-red-400">Arcanas</button>
+                <button onclick="setCategory('Immortal', this)" class="rarity-filter-btn px-4 py-2 text-xs font-black uppercase tracking-wider text-amber-400">Inmortales</button>
+                <button onclick="setCategory('Mythical', this)" class="rarity-filter-btn px-4 py-2 text-xs font-black uppercase tracking-wider text-purple-400">Míticos</button>
+                <button onclick="setCategory('Rare', this)" class="rarity-filter-btn px-4 py-2 text-xs font-black uppercase tracking-wider text-blue-400">Raros</button>
+            </div>
+            <div class="flex items-center gap-2 w-full lg:w-auto justify-end text-xs">
+                <span class="text-slate-500 font-bold uppercase text-[10px]">Ordenar por:</span>
+                <select id="sort-select" onchange="filterItems()" class="dota-input px-3 py-2 text-xs font-bold">
+                    <option value="expensive">Mayor Precio</option>
+                    <option value="cheap">Menor Precio</option>
+                    <option value="name">Nombre (A-Z)</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- GRILLA PRINCIPAL DE ÍTEMS -->
+    <main class="flex-grow max-w-[1440px] mx-auto px-4 sm:px-6 py-8 w-full">
+        <div class="flex items-center justify-between mb-6 pb-3 border-b border-[#18202e]">
+            <div class="flex items-center gap-2.5">
+                <div class="w-1.5 h-6 bg-[#ffc72c]"></div>
+                <h3 class="font-dota text-xl font-black text-white uppercase tracking-wider">Catálogo Activo en la Nube</h3>
+            </div>
+            <div class="text-xs font-mono-tech text-[#ffc72c] bg-[#ffc72c]/10 border border-[#ffc72c]/30 px-3 py-1 font-bold" id="item-count">
+                Sincronizando...
+            </div>
+        </div>
+        <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="dota-footer py-6 px-4 sm:px-6 text-xs text-slate-500">
+        <div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div><span class="font-dota font-black text-white uppercase" id="footer-store-name">CRIS STORE</span> © 2026 — Sistema de Intercambio de Skins.</div>
+            <a id="footer-wa-link" href="#" target="_blank" class="text-emerald-400 hover:underline font-bold flex items-center gap-1.5">
+                <i data-lucide="message-square" class="w-4 h-4"></i> Soporte y Verificación Admin
+            </a>
+        </div>
+    </footer>
+
+    <!-- MODAL AUTH -->
+    <div id="auth-modal" class="fixed inset-0 z-50 bg-black/92 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="dota-modal max-w-md w-full p-6 relative">
+            <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="flex items-center gap-3 mb-5 pb-3 border-b border-[#1e293b]">
+                <div class="w-10 h-10 bg-[#ffc72c]/10 border border-[#ffc72c]/40 flex items-center justify-center text-[#ffc72c]"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+                <div>
+                    <h3 class="font-dota text-lg font-black text-white uppercase">Vincular Steam Trade</h3>
+                    <p class="text-[11px] text-slate-400">Identificación rápida por Trade URL en Firestore.</p>
+                </div>
+            </div>
+            <form onsubmit="handleAuth(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold uppercase text-slate-300 mb-1.5 text-[10px]">Steam Nick / Usuario</label>
+                    <input type="text" id="auth-username" required placeholder="Ej. CrisDota2026" class="dota-input w-full px-3.5 py-2.5 font-bold">
+                </div>
+                <div>
+                    <label class="block font-bold uppercase text-slate-300 mb-1.5 text-[10px]">Steam Trade URL</label>
+                    <input type="url" id="auth-tradeurl" required placeholder="https://steamcommunity.com/tradeoffer/new/?partner=..." class="dota-input w-full px-3.5 py-2.5 font-mono-tech">
+                </div>
+                <button type="submit" class="btn-dota-gold w-full py-3 text-xs font-black uppercase tracking-wider mt-2">Guardar y Vincular Nube</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL RECARGA -->
+    <div id="recharge-modal" class="fixed inset-0 z-50 bg-black/92 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="dota-modal max-w-md w-full p-6 relative text-xs">
+            <button onclick="closeModal('recharge-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="flex items-center gap-3 mb-5 pb-3 border-b border-[#1e293b]">
+                <div class="w-10 h-10 bg-emerald-500/10 border border-emerald-500/40 flex items-center justify-center text-emerald-400"><i data-lucide="wallet" class="w-5 h-5"></i></div>
+                <div>
+                    <h3 class="font-dota text-lg font-black text-white uppercase">Recargar Wallet Interna</h3>
+                    <p class="text-[11px] text-slate-400">Paga mediante Yape, Plin o transferencia BCP.</p>
+                </div>
+            </div>
+            <div class="bg-[#05070a] p-4 border border-[#1e293b] mb-4 space-y-2.5 font-mono-tech">
+                <div class="flex justify-between items-center"><span class="text-slate-400 font-sans uppercase text-[10px] font-bold">Yape / Plin:</span> <strong class="text-emerald-400 text-sm font-bold" id="payment-yape">+51 999 999 999</strong></div>
+                <div class="flex justify-between items-center"><span class="text-slate-400 font-sans uppercase text-[10px] font-bold">BCP Soles:</span> <strong class="text-[#ffc72c] text-sm font-bold" id="payment-bcp">193-xxx-xxx</strong></div>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block font-bold uppercase text-slate-300 mb-1.5 text-[10px]">Monto a Recargar (S/)</label>
+                    <input type="number" id="recharge-amount" value="20" min="5" step="5" class="dota-input w-full px-3.5 py-2.5 font-mono-tech text-sm font-bold text-emerald-400">
+                </div>
+                <button onclick="sendRechargeWhatsApp()" class="btn-dota-green w-full py-3 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2">
+                    <i data-lucide="message-square" class="w-4 h-4"></i> Enviar Comprobante WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARCHIVO SCRIPT EXTERNO -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>

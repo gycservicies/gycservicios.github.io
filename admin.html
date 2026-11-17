@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRIS STORE | Panel de Administración</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css?v=6.0">
+</head>
+<body class="dota-body min-h-screen flex flex-col">
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- LOGIN DE ADMINISTRADOR -->
+    <div id="admin-login-screen" class="fixed inset-0 z-50 bg-[#030508] flex items-center justify-center p-4">
+        <div class="dota-modal max-w-md w-full p-8 border border-[#233248]">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-[#ffc72c]/10 border border-[#ffc72c]/40 flex items-center justify-center text-[#ffc72c] mx-auto mb-3">
+                    <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                </div>
+                <h2 class="font-dota text-2xl font-black text-white uppercase tracking-wider">CRIS STORE ADMIN</h2>
+                <p class="text-xs text-slate-400 mt-1">Acceso restringido al operador del sistema.</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold uppercase text-slate-300 mb-1.5 text-[10px]">Contraseña de Administrador</label>
+                    <input type="password" id="admin-pass-input" required placeholder="Ingresa tu clave secreta..." class="dota-input w-full px-4 py-3 font-mono-tech text-sm">
+                </div>
+                <button type="submit" class="btn-dota-gold w-full py-3.5 text-xs font-black uppercase tracking-wider">
+                    Desbloquear Panel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- INTERFAZ PRINCIPAL DEL PANEL (OCULTA HASTA LOGUEARSE) -->
+    <div id="admin-dashboard" class="hidden flex-grow flex flex-col">
+        
+        <!-- HEADER ADMIN -->
+        <header class="dota-header sticky top-0 z-40">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-18 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="dota-logo-box">
+                        <span class="font-dota font-black text-xl text-[#ffc72c]">AD</span>
+                    </div>
+                    <div>
+                        <h1 class="font-dota text-lg font-black text-white uppercase tracking-wider">PANEL DE CONTROL — CRIS STORE</h1>
+                        <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Firestore Cloud Conectado</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="index.html" target="_blank" class="btn-dota-dark px-4 py-2 text-xs font-black uppercase flex items-center gap-2">
+                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Ver Tienda Pública
+                    </a>
+                    <button onclick="adminLogout()" class="btn-dota-dark px-3 py-2 text-xs font-black text-red-400 hover:text-red-300 uppercase">
+                        Salir
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENIDO ADMIN -->
+        <main class="max-w-[1440px] mx-auto px-4 sm:px-6 py-8 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- COLUMNA 1 & 2: GESTIÓN DE ÍTEMS Y SETS -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- FORMULARIO NUEVO ÍTEM / SET -->
+                <div class="dota-modal p-6 border border-[#233248]">
+                    <div class="flex items-center gap-2.5 mb-5 pb-3 border-b border-[#1e293b]">
+                        <div class="w-2 h-5 bg-[#ffc72c]"></div>
+                        <h3 class="font-dota text-lg font-black text-white uppercase tracking-wider">Agregar Ítem o Set a la Nube</h3>
+                    </div>
+
+                    <form onsubmit="handleSaveItem(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <input type="hidden" id="edit-item-id">
+                        
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Nombre del Ítem / Set</label>
+                            <input type="text" id="item-name" required placeholder="Ej. Fractal Horns of Inner Abysm (Arcana)" class="dota-input w-full px-3 py-2.5 font-bold">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Héroe Asociado</label>
+                            <input type="text" id="item-hero" required placeholder="Ej. Terrorblade o Set General" class="dota-input w-full px-3 py-2.5">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Rareza de Dota 2</label>
+                            <select id="item-rarity" class="dota-input w-full px-3 py-2.5 font-bold">
+                                <option value="Arcana">Arcana (Rojo)</option>
+                                <option value="Immortal">Immortal (Oro)</option>
+                                <option value="Mythical">Mythical (Morado)</option>
+                                <option value="Rare">Rare / Set (Azul)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Precio en Soles (S/)</label>
+                            <input type="number" id="item-price" step="0.50" min="1" required placeholder="85.00" class="dota-input w-full px-3 py-2.5 font-mono-tech text-emerald-400 font-bold">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Stock Disponible</label>
+                            <input type="number" id="item-stock" min="0" value="1" required class="dota-input w-full px-3 py-2.5 font-mono-tech font-bold">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">URL de la Imagen (Steam / Cloud)</label>
+                            <input type="url" id="item-image" required placeholder="https://community.cloudflare.steamstatic.com/..." class="dota-input w-full px-3 py-2.5 font-mono-tech text-[11px]">
+                        </div>
+
+                        <div class="sm:col-span-2 pt-2 flex gap-3">
+                            <button type="submit" class="btn-dota-gold flex-1 py-3 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i> Guardar en Firebase Firestore
+                            </button>
+                            <button type="button" onclick="resetItemForm()" class="btn-dota-dark px-4 py-3 text-xs font-bold uppercase">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- LISTADO DE INVENTARIO ACTUAL -->
+                <div class="dota-modal p-6 border border-[#233248]">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#1e293b]">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-2 h-5 bg-emerald-400"></div>
+                            <h3 class="font-dota text-lg font-black text-white uppercase tracking-wider">Inventario Sincronizado</h3>
+                        </div>
+                        <span class="text-xs font-mono-tech text-emerald-400 font-bold" id="admin-item-count">0 ítems</span>
+                    </div>
+
+                    <div class="overflow-x-auto max-h-[450px] overflow-y-auto no-scrollbar">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-[#05070a] text-slate-400 uppercase text-[10px] font-bold sticky top-0">
+                                <tr>
+                                    <th class="p-3">Ítem / Set</th>
+                                    <th class="p-3">Héroe</th>
+                                    <th class="p-3">Rareza</th>
+                                    <th class="p-3">Precio</th>
+                                    <th class="p-3">Stock</th>
+                                    <th class="p-3 text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-items-table-body" class="divide-y divide-[#182232]">
+                                <!-- Cargado dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- COLUMNA 3: GESTIÓN DE SALDO DE USUARIOS Y CONFIG -->
+            <div class="space-y-6">
+                
+                <!-- GESTIÓN DE WALLET DE USUARIOS -->
+                <div class="dota-modal p-6 border border-[#233248]">
+                    <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-[#1e293b]">
+                        <div class="w-2 h-5 bg-emerald-400"></div>
+                        <h3 class="font-dota text-lg font-black text-white uppercase tracking-wider">Acreditar Saldo Wallet</h3>
+                    </div>
+                    <form onsubmit="handleUpdateUserBalance(event)" class="space-y-3.5 text-xs">
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Steam Nick del Usuario</label>
+                            <input type="text" id="target-username" required placeholder="Ej. CrisDota2026" class="dota-input w-full px-3.5 py-2.5 font-bold">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Monto a Sumar / Establecer (S/)</label>
+                            <input type="number" id="target-balance" step="0.50" required placeholder="50.00" class="dota-input w-full px-3.5 py-2.5 font-mono-tech text-emerald-400 font-bold text-sm">
+                        </div>
+                        <button type="submit" class="btn-dota-green w-full py-3 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i> Actualizar Saldo en Nube
+                        </button>
+                    </form>
+                </div>
+
+                <!-- CONFIGURACIÓN DE CONTACTO Y PAGOS -->
+                <div class="dota-modal p-6 border border-[#233248]">
+                    <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-[#1e293b]">
+                        <div class="w-2 h-5 bg-[#ffc72c]"></div>
+                        <h3 class="font-dota text-lg font-black text-white uppercase tracking-wider">Configuración de Tienda</h3>
+                    </div>
+                    <form onsubmit="handleSaveSettings(event)" class="space-y-3.5 text-xs">
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">WhatsApp Soporte (con código país)</label>
+                            <input type="text" id="config-whatsapp" required placeholder="51999999999" class="dota-input w-full px-3 py-2 font-mono-tech">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Número Yape / Plin</label>
+                            <input type="text" id="config-yape" required placeholder="+51 999 999 999" class="dota-input w-full px-3 py-2 font-mono-tech">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1 text-[10px]">Cuenta BCP Soles</label>
+                            <input type="text" id="config-bcp" required placeholder="193-xxx-xxx" class="dota-input w-full px-3 py-2 font-mono-tech">
+                        </div>
+                        <button type="submit" class="btn-dota-gold w-full py-2.5 text-xs font-black uppercase tracking-wider">
+                            Guardar Configuración
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- SCRIPT EXTERNO DEL PANEL ADMIN -->
+    <script type="module" src="admin-script.js"></script>
+</body>
+</html>

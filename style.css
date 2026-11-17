@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap');
+
+:root {
+    --bg-base: #030508;
+    --border-line: #182232;
+    --gold-accent: #ffc72c;
+}
+
+.dota-body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-base);
+    color: #94a3b8;
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 199, 44, 0.05) 0%, transparent 40%),
+        linear-gradient(to bottom, #05080d, #020305);
+}
+
+.font-dota { font-family: 'Rajdhani', sans-serif; }
+.font-mono-tech { font-family: 'JetBrains Mono', monospace; }
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #020305; }
+::-webkit-scrollbar-thumb { background: #1a2332; }
+::-webkit-scrollbar-thumb:hover { background: #ffc72c; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.dota-header { background: rgba(3, 5, 8, 0.95); border-bottom: 1px solid var(--border-line); box-shadow: 0 4px 25px rgba(0,0,0,0.8); }
+.dota-logo-box { width: 40px; height: 40px; background: #080d16; border: 1px solid #ffc72c; display: flex; align-items: center; justify-content: center; clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%); }
+.dota-user-pill { background: #080d16; border: 1px solid #1e293b; }
+
+.dota-ticker-bar { background: #05080d; }
+.ticker-card { background: #080d16; border: 1px solid #182232; transition: all 0.15s ease; }
+.ticker-card:hover { border-color: #ffc72c; background: #0d1422; }
+
+.dota-hero {
+    background: linear-gradient(90deg, rgba(3, 5, 8, 0.98) 0%, rgba(8, 13, 22, 0.9) 100%);
+    border-bottom: 1px solid var(--border-line);
+}
+.dota-quick-card { background: #080d16; border: 1px solid #1a2536; transition: all 0.2s ease; }
+.dota-quick-card:hover { background: #0d1524; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+
+.btn-dota-gold { background: linear-gradient(180deg, #ffc72c 0%, #d99b00 100%); color: #030508; border: 1px solid #ffe875; clip-path: polygon(0 0, 100% 0, 100% 80%, 92% 100%, 0 100%); transition: all 0.15s ease; }
+.btn-dota-gold:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-dota-green { background: linear-gradient(180deg, #10b981 0%, #047857 100%); color: #fff; border: 1px solid #34d399; }
+.btn-dota-dark { background: #0c121d; color: #e2e8f0; border: 1px solid #233248; }
+.btn-dota-dark:hover { background: #131d2e; border-color: #ffc72c; }
+.btn-dota-buy { background: linear-gradient(180deg, #131d2e 0%, #080d16 100%); border: 1px solid #283952; color: #f8fafc; transition: all 0.15s ease; }
+.btn-dota-buy:hover { background: linear-gradient(180deg, #ffc72c 0%, #b45309 100%); border-color: #ffe875; color: #030508; font-weight: 900; }
+
+.dota-filter-bar { background: rgba(5, 8, 13, 0.96); border-bottom: 1px solid var(--border-line); }
+.dota-input { background: #05070a; border: 1px solid #1e293b; color: #f1f5f9; outline: none; transition: border-color 0.15s; }
+.dota-input:focus { border-color: #ffc72c; }
+
+.rarity-filter-btn { background: #080d16; border: 1px solid #1a2536; color: #94a3b8; transition: all 0.15s ease; }
+.rarity-filter-btn.active { background: #ffc72c; color: #030508; border-color: #ffe875; font-weight: 900; }
+
+.dota-item-card { background: #080d16; border: 1px solid #1a2536; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.2s ease; position: relative; }
+.dota-item-card:hover { transform: translateY(-4px); background: #0d1524; box-shadow: 0 12px 30px rgba(0,0,0,0.8); }
+
+.card-arcana { border-top: 3px solid #ef4444; background: linear-gradient(180deg, rgba(239, 68, 68, 0.1) 0%, #080d16 45%); }
+.card-immortal { border-top: 3px solid #eab308; background: linear-gradient(180deg, rgba(234, 179, 8, 0.1) 0%, #080d16 45%); }
+.card-mythical { border-top: 3px solid #a855f7; background: linear-gradient(180deg, rgba(168, 85, 247, 0.1) 0%, #080d16 45%); }
+.card-rare { border-top: 3px solid #3b82f6; background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, #080d16 45%); }
+.card-common { border-top: 3px solid #64748b; }
+
+.dota-modal { background: #080d16; border: 1px solid #233248; box-shadow: 0 25px 60px rgba(0,0,0,0.95); }
+.dota-footer { background: #030508; border-top: 1px solid var(--border-line); }
